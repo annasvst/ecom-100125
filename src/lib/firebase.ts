@@ -76,7 +76,7 @@ export async function updateUser(user: User): Promise<FirestoreResponse> {
     if (typeof e === 'object' && e !== null && 'code' in e && 'message' in e) {
       return {
         success: false,
-        error: { code: (e as any).code, message: (e as any).message },
+        error: { code: (e as FirebaseError).code, message: (e as FirebaseError).message },
       };
     }
     return {
@@ -105,7 +105,7 @@ export async function createUser(
     if (typeof e === 'object' && e !== null && 'code' in e && 'message' in e) {
       return {
         success: false,
-        error: { code: (e as any).code, message: (e as any).message },
+        error: { code: (e as FirebaseError).code, message: (e as FirebaseError).message },
       };
     }
     return {
