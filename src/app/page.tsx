@@ -1,20 +1,32 @@
+import { Button } from '@/components/ui/button';
+import { auth0 } from '@/lib/auth0';
+import { redirect } from 'next/navigation';
 
 export default async function Home() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/user/`);
+  const session = await auth0.getSession();
 
-  if (!res.ok) {
-    return <div>No user details are found!</div>
+  if (!session) {
+    redirect('/auth/login');
   }
-  const {user} = await res.json()
-console.log( user)
 
-  if (user) {
-    return (
-      <div className='font-sans items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20'>
-        <h1>User data</h1>
-        <p>Name: {user.name}</p>
-        <p>Email: {user.email}</p>
-      </div>
-    );
-  }
+  const prices = [
+    'price_1SQYXtQitHtctVUTLdrIdHPC',
+    'price_1SQXvBQitHtctVUTdKQZ8yaI',
+  ];
+
+  return (
+    <div className='text-center'>
+      <h1>Protected Content</h1>
+      <p>Welcome, {session.user.name}!</p>
+
+      <form action='/api/stripe/checkout' method='POST'>
+        <section>
+          <input type='hidden' name="prices" value={prices.join(',')} />
+          <Button type='submit' role='link'>
+            Checkout
+          </Button>
+        </section>
+      </form>
+    </div>
+  );
 }

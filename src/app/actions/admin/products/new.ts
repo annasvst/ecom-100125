@@ -23,7 +23,9 @@ export async function createProduct(
   // If blob.url => save new product to Firebase including image url
 
 
-
+  // Call Stripe Product API to create a new product and price(s)
+  // Add Product_id and price_id to the product together with img URLs
+  // Store product info in DB
 
 
   return { 
