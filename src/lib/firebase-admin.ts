@@ -5,7 +5,6 @@ const serviceAccount: admin.ServiceAccount = {
   clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
   privateKey: process.env.FIREBASE_PRIVATE_KEY,
 };
-console.log('Service Account:', serviceAccount.privateKey);
 
 function getFirebaseAdmin() {
   if (!admin.apps.length) {
