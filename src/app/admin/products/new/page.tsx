@@ -10,8 +10,10 @@ import Link from 'next/link';
 import { Textarea } from '@/components/ui/textarea';
 import { useRef } from 'react';
 
-// Use real product type instead!
 interface Product {
+  name: string;
+  description: string;
+  tags: string[];
   imageUrl: string;
   downloadUrl: string;
 }
@@ -101,6 +103,20 @@ export default function AddProductPage() {
         placeholder='Product description'
         value={description}
         required
+      />
+      {state.errors?.description && (
+        <div className='text-sm text-red-600'>
+          {state.errors.description.map((error, index) => (
+            <p key={index}>{error}</p>
+          ))}
+        </div>
+      )}
+      <Label htmlFor='tags'>Tags (comma-separated)</Label>
+      <Input
+        type='text'
+        id='tags'
+        name='tags'
+        placeholder='electronics, phone, mobile phone'
       />
       <Label htmlFor='image'>Image</Label>
       <Input

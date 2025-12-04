@@ -3,6 +3,7 @@
 import { NewProductFormState } from '@/app/admin/products/new/page';
 import { put } from '@vercel/blob';
 import { revalidatePath } from 'next/cache';
+import { parseTags, validateDescription } from '@/lib/utils';
 
 export async function createProduct(
   currentState: NewProductFormState,
@@ -10,6 +11,21 @@ export async function createProduct(
 ): Promise<NewProductFormState> {
 
   // Validate form data so everything is correct (zod)
+
+  const description = formData.get('description') as string;
+  const descriptionError = validateDescription(description);
+  
+  if (descriptionError) {
+    return {
+      success: false,
+      errors: {
+        description: [descriptionError],
+      },
+    };
+  }
+
+  const tagsString = formData.get('tags') as string;
+  const tags = tagsString ? parseTags(tagsString) : [];
 
   const imageFile = formData.get('image') as File;
   const imagePath = '/products/images/' + imageFile.name;
