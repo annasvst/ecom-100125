@@ -38,7 +38,7 @@ export default function AddProductPage() {
   if (state.success) {
     return (
       <div className='my-20 max-w-lg mx-auto flex flex-col gap-4'>
-        <h1>Image uploaded successfully!</h1>
+        <h1>Product created successfully!</h1>
         {state.data?.imageUrl && (
           <Image
             src={state.data?.imageUrl}
@@ -81,7 +81,7 @@ export default function AddProductPage() {
       action={action}
       className='my-20 max-w-lg mx-auto flex flex-col gap-4'
     >
-      <Label htmlFor='image'>Name</Label>
+      <Label htmlFor='name'>Name</Label>
       <Input
         type='text'
         id='name'
@@ -103,6 +103,7 @@ export default function AddProductPage() {
         placeholder='Product description'
         value={description}
         required
+        readOnly
       />
       {state.errors?.description && (
         <div className='text-sm text-red-600'>
